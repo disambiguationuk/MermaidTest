@@ -1,45 +1,49 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Mermaid
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
+    paths:
+      - '**/*.md'
   pull_request:
     branches: [ master ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  mermaid:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      -  name: Mermaid
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-         uses: neenjaw/compile-mermaid-markdown-action@0.2.4
-         with:
-      # the path to the files to compile
-            files: /*.md
-      # Where to output the file - std otherwise
-            output: output/
-      
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2.2.2
+      - uses: actions/checkout@v2.3.4
         with:
-          # Artifact name
-          name: drop # optional, default is artifact
-          # A file, directory or wildcard pattern that describes what to upload
-          path: output/*.png
-          # The desired behavior if no files are found using the provided path.
-
-
-
+          fetch-depth: 2
+      - name: Check files
+        id: getfile
+        run: |
+          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e '.*\.md$' | xargs)"
+      - name: Updated MD files
+        run: |
+          echo ${{ steps.getfile.outputs.files }}
+      - name: Compile mermaid
+        uses: neenjaw/compile-mermaid-markdown-action@0.2.4
+        with:
+          files: ${{ steps.getfile.outputs.files }}
+          output: 'docs/assets'
+        env:
+          HIDE_CODEBLOCKS: 1
+          ABSOLUTE_IMAGE_LINKS: 0
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git status
+          git commit -am "Mermaid: Adding new compiled images" || echo "No updates"
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
       
