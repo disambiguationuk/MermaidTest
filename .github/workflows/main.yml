@@ -22,9 +22,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      -  id: Mermaid
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      -   uses: neenjaw/compile-mermaid-markdown-action@0.2.4
-      -   with:
+         uses: neenjaw/compile-mermaid-markdown-action@0.2.4
+         with:
       # the path to the files to compile
             files: "*.md"
       # Where to output the file - std otherwise
