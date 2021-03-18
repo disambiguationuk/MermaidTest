@@ -27,9 +27,9 @@ jobs:
          uses: neenjaw/compile-mermaid-markdown-action@0.2.4
          with:
       # the path to the files to compile
-            files: *.md
+            files: /*.md
       # Where to output the file - std otherwise
-            output: output
+            output: output/
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.2
@@ -37,7 +37,7 @@ jobs:
           # Artifact name
           name: drop # optional, default is artifact
           # A file, directory or wildcard pattern that describes what to upload
-          path: *.png
+          path: /*.png
           # The desired behavior if no files are found using the provided path.
 
 
