@@ -22,7 +22,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      -  id: Mermaid
+      -  name: Mermaid
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
          uses: neenjaw/compile-mermaid-markdown-action@0.2.4
          with:
@@ -30,3 +30,16 @@ jobs:
             files: "*.md"
       # Where to output the file - std otherwise
             output: "*.mmd"
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          # Artifact name
+          name: drop # optional, default is artifact
+          # A file, directory or wildcard pattern that describes what to upload
+          path: "*.mmd"
+          # The desired behavior if no files are found using the provided path.
+
+
+
+      
