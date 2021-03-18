@@ -27,7 +27,7 @@ jobs:
          uses: neenjaw/compile-mermaid-markdown-action@0.2.4
          with:
       # the path to the files to compile
-            files: "mermaid.md"
+            files: "/mermaid.md"
       # Where to output the file - std otherwise
             output: "output"
       
