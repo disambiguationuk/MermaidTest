@@ -27,9 +27,9 @@ jobs:
          uses: neenjaw/compile-mermaid-markdown-action@0.2.4
          with:
       # the path to the files to compile
-            files: ""
+            files: /*.md
       # Where to output the file - std otherwise
-            output: "output"
+            output: output
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.2
