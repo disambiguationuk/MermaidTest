@@ -38,7 +38,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git status
-          git commit -am "Mermaid: Adding new compiled images" || echo "No updates"
+          git commit -am "[Mermaid] Adding new compiled images" || echo "No updates"
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
