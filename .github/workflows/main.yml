@@ -30,6 +30,8 @@ jobs:
           files: ${{ steps.getfile.outputs.files }}
           output: 'docs/assets'
         env:
+          HIDE_CODEBLOCKS: 0
+          ABSOLUTE_IMAGE_LINKS: 0
           OUTPUT_FILE_TYPE: "svg"
       - name: Commit files
         run: |
