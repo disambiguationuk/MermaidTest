@@ -25,13 +25,12 @@ jobs:
         run: |
           echo ${{ steps.getfile.outputs.files }}
       - name: Compile mermaid
-        uses: neenjaw/compile-mermaid-markdown-action@0.2.4
+        uses: disambiguationuk/compile-mermaid-markdown-action@0.3.1-preview1
         with:
           files: ${{ steps.getfile.outputs.files }}
           output: 'docs/assets'
         env:
-          HIDE_CODEBLOCKS: 1
-          ABSOLUTE_IMAGE_LINKS: 0
+          RENDER_SVG: 1
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
